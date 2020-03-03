@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import Item from './item.js';
 import '../css/main.css';
 
 class App extends Component  {
@@ -46,15 +47,7 @@ class App extends Component  {
         ADD
        </button>
        <ul>
-         {this.state.list.map(item => {
-           return(
-               <li key={item.id}>
-                 {item.value}
-                  <button className="delete">X</button>
-               </li>
-             )
-         })}
-
+         {this.state.list.map(item => {return(<Item props={item}   />)})}
        </ul>
        </div>
       </div>
