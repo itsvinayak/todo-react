@@ -1,5 +1,12 @@
 import React,{Component} from 'react';
-import '../css/main.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import ListGroup from 'react-bootstrap/ListGroup';
+
 
 class App extends Component  {
   constructor(props) {
@@ -35,7 +42,7 @@ class App extends Component  {
   deleteItem(key){
     const list = [...this.state.list];
     const updateList = list.filter(item => item.id !== key);
-    
+
     this.setState({
       list:updateList,
     });
@@ -43,36 +50,58 @@ class App extends Component  {
   }
 
   render(){
-    return(<div className="App">
-          <h1> TODO LIST</h1>
-          <hr/>
-          <div className="box">
-          <input
-             type="input"
-             placeholder="add item . . . "
-             value = {this.state.userInput}
-             onChange = {item => this.updateInput(item.target.value)}
-          />
-        <button
-          onClick = {()=>this.addItem()}
-        >
-        ADD
-       </button>
-       <ul>
-         {this.state.list.map(item => {return(
-           <li key={item.id}>
-              {item.value}
-              <button
-                className="delete"
-                onClick = { () => this.deleteItem(item.id) }>
-                X
-              </button>
+    return(<Container>
 
-           </li>
+          <Row style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: '3rem',
+                  fontWeight: 'bolder',
+                }}
+                >TODO LIST
+            </Row>
+
+           <hr/>
+          <Row>
+          <Col md={{ span: 5, offset: 4 }}>
+
+          <InputGroup className="mb-3">
+          <FormControl
+            placeholder="add item . . . "
+            size="lg"
+            value = {this.state.userInput}
+            onChange = {item => this.updateInput(item.target.value)}
+            aria-label="add something"
+            aria-describedby="basic-addon2"
+          />
+          <InputGroup.Append>
+            <Button
+              variant="dark"
+              size="lg"
+              onClick = {()=>this.addItem()}
+              >
+              ADD
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+
+     </Col>
+   </Row>
+   <Row>
+     <Col md={{ span: 5, offset: 4 }}>
+        <ListGroup>
+         {this.state.list.map(item => {return(
+
+            <ListGroup.Item variant="dark" action  onClick = { () => this.deleteItem(item.id) }>
+              {item.value}
+            </ListGroup.Item>
+
          )})}
-       </ul>
-       </div>
-      </div>
+        </ListGroup>
+     </Col>
+   </Row>
+     </Container>
     );
   }
 }
