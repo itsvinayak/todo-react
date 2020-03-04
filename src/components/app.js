@@ -1,35 +1,47 @@
 import React,{Component} from 'react';
-import Item from './item.js';
 import '../css/main.css';
 
 class App extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      newItem : "",
+      userInput : "",
       list:[]
     }
   }
 
-  updateInput(key,value){
+  updateInput(value){
     this.setState({
-      [key]:value,
+      userInput: value,
     });
   }
 
   addItem(){
-    const newItem = {
-      id :  Math.random(),
-      value : this.state.newItem
-    };
-    const list = [...this.state.list];
-    list.push(newItem);
+    if(this.state.userInput !== '' ){
+      const userInput = {
+        id :  Math.random(),
+        value : this.state.userInput
+      };
+      const list = [...this.state.list];
+      list.push(userInput);
 
-    this.setState({
-      list,
-      newItem:""
-    });
+      this.setState({
+        list,
+        userInput:""
+      });
+    }
   }
+
+  deleteItem(key){
+    const list = [...this.state.list];
+    const updateList = list.filter(item => item.id !== key);
+    
+    this.setState({
+      list:updateList,
+    });
+
+  }
+
   render(){
     return(<div className="App">
           <h1> TODO LIST</h1>
@@ -38,8 +50,8 @@ class App extends Component  {
           <input
              type="input"
              placeholder="add item . . . "
-             value = {this.state.newItem}
-             onChange = {item => this.updateInput("newItem",item.target.value)}
+             value = {this.state.userInput}
+             onChange = {item => this.updateInput(item.target.value)}
           />
         <button
           onClick = {()=>this.addItem()}
@@ -47,7 +59,17 @@ class App extends Component  {
         ADD
        </button>
        <ul>
-         {this.state.list.map(item => {return(<Item props={item}   />)})}
+         {this.state.list.map(item => {return(
+           <li key={item.id}>
+              {item.value}
+              <button
+                className="delete"
+                onClick = { () => this.deleteItem(item.id) }>
+                X
+              </button>
+
+           </li>
+         )})}
        </ul>
        </div>
       </div>
