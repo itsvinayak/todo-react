@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+// bootstrap for react
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,27 +12,35 @@ import ListGroup from 'react-bootstrap/ListGroup';
 class App extends Component  {
   constructor(props) {
     super(props);
+
+    // setting up state
     this.state = {
       userInput : "",
       list:[]
     }
   }
 
+  //set a user input value
   updateInput(value){
     this.setState({
       userInput: value,
     });
   }
 
+  // add item if user input in not empty
   addItem(){
     if(this.state.userInput !== '' ){
       const userInput = {
+        // add a random id which is used to delete
         id :  Math.random(),
+        // add a user value to list
         value : this.state.userInput
       };
+      // update list
       const list = [...this.state.list];
       list.push(userInput);
 
+      // reset state
       this.setState({
         list,
         userInput:""
@@ -39,10 +48,14 @@ class App extends Component  {
     }
   }
 
+  // function to delete item from list use id to delete
   deleteItem(key){
     const list = [...this.state.list];
+
+    //filter values and leave value which we need to delete
     const updateList = list.filter(item => item.id !== key);
 
+    //update list in state
     this.setState({
       list:updateList,
     });
@@ -91,6 +104,7 @@ class App extends Component  {
    <Row>
      <Col md={{ span: 5, offset: 4 }}>
         <ListGroup>
+          {/* map over and print items */}
          {this.state.list.map(item => {return(
 
             <ListGroup.Item variant="dark" action  onClick = { () => this.deleteItem(item.id) }>
