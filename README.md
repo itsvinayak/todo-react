@@ -18,5 +18,8 @@ React is a JavaScript library used to develop interactive user interfaces. It is
 </ul>
 
 ---
+<br/>
+<p align="center">
+  <img src="list.gif" />
+</p>
 
-![app](list.gif)
